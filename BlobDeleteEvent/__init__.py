@@ -7,13 +7,22 @@ from sendgrid.helpers.mail import Mail
 def main(event: func.EventGridEvent):
     logging.info(f"Event received: {event.get_json()}")
 
-    try:
-        event_data = req.get_json()
-    except Exception as e:
-        return func.HttpResponse(f"Invalid JSON: {str(e)}", status_code=400)
-
-    # Just log the URL for testing
+    event_data = event.get_json()
     blob_url = event_data.get("data", {}).get("url", "Unknown URL")
     logging.info(f"Blob URL: {blob_url}")
 
-    return func.HttpResponse("Received event", status_code=200)
+    # Send email via SendGrid
+    sendgrid_api_key = os.environ.get("SENDGRID_API_KEY")
+    message = Mail(
+        from_email="manojselva592285@outlook.com",
+        to_emails="manojselva7094@gmail.com",
+        subject="Azure Blob Deleted Notification",
+        html_content=f"<p>Blob Deleted: {blob_url}</p>"
+    )
+
+    try:
+        sg = SendGridAPIClient(sendgrid_api_key)
+        sg.send(message)
+        logging.info("Email sent successfully via SendGrid")
+    except Exception as e:
+        logging.error(f"Error sending email: {str(e)}")
