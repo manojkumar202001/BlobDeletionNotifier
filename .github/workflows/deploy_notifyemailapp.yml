@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -23,8 +24,16 @@ jobs:
           pip install --upgrade pip
           pip install -r BlobDeleteEvent/requirements.txt
 
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+
       - name: Deploy to Azure Function
         uses: Azure/functions-action@v1
         with:
           app-name: 'notifyemailapp'
-          package: '.'   # repo root containing BlobDeleteEvent folder
+          package: '.'
