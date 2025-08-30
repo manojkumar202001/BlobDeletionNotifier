@@ -13,8 +13,8 @@ def main(event: func.EventGridEvent):
 
     # Send email using SendGrid
     message = Mail(
-        from_email='noreply@example.com',        # Replace with your sender email
-        to_emails='admin@example.com',           # Replace with admin email
+        from_email='manojselva592285@outlook.com',        # Replace with your sender email
+        to_emails='manojselva7094@gmail.com',           # Replace with admin email
         subject='Blob Deleted Notification',
         plain_text_content=f'The blob {blob_name} was deleted.'
     )
