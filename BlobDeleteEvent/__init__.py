@@ -19,7 +19,7 @@ def main(event: func.EventGridEvent):
 
     # Email details
     message = Mail(
-        from_email="manojselva592285@outlookcom",   # MUST be verified in SendGrid
+        from_email="manojselva592285@outlook.com",   # MUST be verified in SendGrid
         to_emails="manojselva7094@gmail.com.com",                  # Recipient
         subject="Azure Blob Deleted Notification",
         html_content=f"""
