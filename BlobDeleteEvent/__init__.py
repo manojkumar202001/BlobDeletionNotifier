@@ -4,8 +4,8 @@ import azure.functions as func
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
-def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info("HTTP trigger received")
+def main(event: func.EventGridEvent):
+    logging.info(f"Event received: {event.get_json()}")
 
     try:
         event_data = req.get_json()
