@@ -1,8 +1,8 @@
+import os
 import logging
 import azure.functions as func
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-import os
 
 def main(event: func.EventGridEvent):
     logging.info(f"Event received: {event.get_json()}")
@@ -12,6 +12,10 @@ def main(event: func.EventGridEvent):
     blob_name = blob_url.split("/")[-1]
 
     sendgrid_api_key = os.environ.get("SENDGRID_API_KEY")
+    if not sendgrid_api_key:
+        logging.error("SENDGRID_API_KEY not set")
+        return
+
     message = Mail(
         from_email="manojselva592285@outlook.com",
         to_emails="manojselva7094@gmail.com",
