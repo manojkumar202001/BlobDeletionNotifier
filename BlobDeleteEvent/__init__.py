@@ -15,7 +15,7 @@ def main(event: func.EventGridEvent):
     blob_name = blob_url.split("/")[-1]
 
     # Load SendGrid API key from environment variable
-    sendgrid_api_key = os.environ["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"]
+    sendgrid_api_key = os.environ["SENDGRID_API_KEY"]
 
     # Email details
     message = Mail(
